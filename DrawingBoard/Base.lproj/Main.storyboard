@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="ipad9_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tu9-AI-JLw" customClass="GKDrawingBoardView">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XZS-Rd-f1p" customClass="RunsDrawingBoardView">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ce6-OR-Flg">
+                                <rect key="frame" x="864" y="80" width="160" height="628"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="KF6-vn-6aA">
+                                        <rect key="frame" x="0.0" y="0.0" width="160" height="628"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="2Vu-EJ-NF4"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="Okl-A0-3Rw"/>
+                                        </connections>
+                                    </tableView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9YY-Fb-zis">
+                                        <rect key="frame" x="0.0" y="0.0" width="1" height="628"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="1" id="Ypm-24-jei"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aBm-zE-To5">
+                                        <rect key="frame" x="0.0" y="0.0" width="160" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="Z55-vv-vFI"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q9W-q8-S9W">
+                                        <rect key="frame" x="0.0" y="627" width="160" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="4DN-Q0-cnh"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="aBm-zE-To5" secondAttribute="trailing" id="2G6-QM-LuB"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q9W-q8-S9W" secondAttribute="trailing" id="46S-df-w9e"/>
+                                    <constraint firstAttribute="width" constant="160" id="8wL-0N-Tg3"/>
+                                    <constraint firstAttribute="trailing" secondItem="KF6-vn-6aA" secondAttribute="trailing" id="AMB-G1-zCZ"/>
+                                    <constraint firstItem="KF6-vn-6aA" firstAttribute="top" secondItem="ce6-OR-Flg" secondAttribute="top" id="GnT-EZ-TLc"/>
+                                    <constraint firstItem="9YY-Fb-zis" firstAttribute="leading" secondItem="ce6-OR-Flg" secondAttribute="leading" id="NWd-8K-5li"/>
+                                    <constraint firstItem="KF6-vn-6aA" firstAttribute="leading" secondItem="ce6-OR-Flg" secondAttribute="leading" id="dkn-MN-aCw"/>
+                                    <constraint firstAttribute="bottom" secondItem="Q9W-q8-S9W" secondAttribute="bottom" id="f8e-Ap-Xys"/>
+                                    <constraint firstItem="aBm-zE-To5" firstAttribute="leading" secondItem="ce6-OR-Flg" secondAttribute="leading" id="hVz-Hh-c9p"/>
+                                    <constraint firstItem="aBm-zE-To5" firstAttribute="top" secondItem="ce6-OR-Flg" secondAttribute="top" id="i4p-5p-7ns"/>
+                                    <constraint firstItem="9YY-Fb-zis" firstAttribute="top" secondItem="ce6-OR-Flg" secondAttribute="top" id="oj3-Vi-QdG"/>
+                                    <constraint firstItem="Q9W-q8-S9W" firstAttribute="leading" secondItem="ce6-OR-Flg" secondAttribute="leading" id="p1O-xW-zjF"/>
+                                    <constraint firstAttribute="bottom" secondItem="9YY-Fb-zis" secondAttribute="bottom" id="pjM-vB-sze"/>
+                                    <constraint firstAttribute="bottom" secondItem="KF6-vn-6aA" secondAttribute="bottom" id="raA-jn-cTD"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ce6-OR-Flg" secondAttribute="bottom" constant="60" id="6VN-fU-hUN"/>
+                            <constraint firstItem="Tu9-AI-JLw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="GE1-Vb-45h"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Tu9-AI-JLw" secondAttribute="bottom" id="N81-6D-1xF"/>
+                            <constraint firstItem="Tu9-AI-JLw" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="RzF-09-0gC"/>
+                            <constraint firstAttribute="trailing" secondItem="ce6-OR-Flg" secondAttribute="trailing" id="Y5S-jd-Xiv"/>
+                            <constraint firstItem="ce6-OR-Flg" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="dOR-4D-Bf6"/>
+                            <constraint firstAttribute="trailing" secondItem="Tu9-AI-JLw" secondAttribute="trailing" id="vGE-b3-2cm"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="controlPanelTableView" destination="KF6-vn-6aA" id="EAC-Kd-sGi"/>
+                        <outlet property="drawerMenuView" destination="ce6-OR-Flg" id="3aw-nc-p5d"/>
+                        <outlet property="drawingBoardView" destination="Tu9-AI-JLw" id="tpp-08-hkB"/>
+                        <outlet property="runsDrawingBoardView" destination="XZS-Rd-f1p" id="khk-zf-Jcc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-292" y="62.518740629685162"/>
+        </scene>
+    </scenes>
+</document>
