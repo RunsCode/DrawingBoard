@@ -26,6 +26,7 @@
 		AECC35081F42E1A500267F95 /* RunsBrushCharacterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AECC35071F42E1A500267F95 /* RunsBrushCharacterModel.m */; };
 		AECC350B1F42EB4600267F95 /* RunsDrawingBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = AECC350A1F42EB4600267F95 /* RunsDrawingBoardView.m */; };
 		AECC350F1F43025B00267F95 /* RunsDrawingBoardProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AECC350E1F43025B00267F95 /* RunsDrawingBoardProxy.m */; };
+		AECC35161F45434B00267F95 /* RunsTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = AECC35151F45434B00267F95 /* RunsTextFieldView.m */; };
 		E0C8FA8CB42E471514F26D67 /* libPods-DrawingBoard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 717B06551F582C44EAD7445B /* libPods-DrawingBoard.a */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,8 @@
 		AECC35111F43033200267F95 /* RunsDrawingBoardProxyProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunsDrawingBoardProxyProtocol.h; sourceTree = "<group>"; };
 		AECC35121F43F46E00267F95 /* RunsDrawingBoardViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunsDrawingBoardViewDelegate.h; sourceTree = "<group>"; };
 		AECC35131F44223D00267F95 /* RunsDrawingBoardViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunsDrawingBoardViewProtocol.h; sourceTree = "<group>"; };
+		AECC35141F45434B00267F95 /* RunsTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunsTextFieldView.h; sourceTree = "<group>"; };
+		AECC35151F45434B00267F95 /* RunsTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunsTextFieldView.m; sourceTree = "<group>"; };
 		FA1C96791798FE48B9F81DBE /* Pods-DrawingBoard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrawingBoard.release.xcconfig"; path = "Pods/Target Support Files/Pods-DrawingBoard/Pods-DrawingBoard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -187,6 +190,8 @@
 				AECC34E31F41AE0E00267F95 /* GKDrawingBoardView.m */,
 				AECC35091F42EB4600267F95 /* RunsDrawingBoardView.h */,
 				AECC350A1F42EB4600267F95 /* RunsDrawingBoardView.m */,
+				AECC35141F45434B00267F95 /* RunsTextFieldView.h */,
+				AECC35151F45434B00267F95 /* RunsTextFieldView.m */,
 				AECC350D1F43025B00267F95 /* RunsDrawingBoardProxy.h */,
 				AECC350E1F43025B00267F95 /* RunsDrawingBoardProxy.m */,
 				AECC34E61F41AE4600267F95 /* RunsColorPickerView.h */,
@@ -346,6 +351,7 @@
 				AECC34FF1F42CFF300267F95 /* RunsRound.m in Sources */,
 				AECC34FC1F42A50F00267F95 /* RunsSquare.m in Sources */,
 				AECC350B1F42EB4600267F95 /* RunsDrawingBoardView.m in Sources */,
+				AECC35161F45434B00267F95 /* RunsTextFieldView.m in Sources */,
 				AECC34C71F4181E800267F95 /* ViewController.m in Sources */,
 				AECC34C41F4181E800267F95 /* AppDelegate.m in Sources */,
 				AECC34F61F42987200267F95 /* RunsBeeline.m in Sources */,

@@ -76,7 +76,7 @@
 
 - (void)drawTextChangedWithFrame:(CGRect)frame text:(NSString *)text {
     RunsBrushCharacterModel *model = (RunsBrushCharacterModel *)(self.brushes.lastObject);
-    if (!model) return;
+    if (!model || model.shape != ShapeType_Text) return;
     model.character = text;
     [model.frames removeAllObjects];
     NSValue *value = [NSValue valueWithCGRect:frame];
@@ -85,7 +85,7 @@
 
 - (void)drawTextEndedWithFrame:(CGRect)frame text:(NSString *)text {
     RunsBrushCharacterModel *model = (RunsBrushCharacterModel *)(self.brushes.lastObject);
-    if (!model) return;
+    if (!model || model.shape != ShapeType_Text) return;
     model.character = text;
     [model.frames removeAllObjects];
     NSValue *value = [NSValue valueWithCGRect:frame];
@@ -121,7 +121,6 @@
 }
 
 - (void)drawWithContext:(CGContextRef)context {
-    //这里要考虑是否要分开绘制 待单元测试 校验
     [self.brushes enumerateObjectsUsingBlock:^(id<RunsBrushProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         id<RunsShapeProtocol> shape = [self shapeRef:obj.shape];
         [shape drawContext:context brush:obj];

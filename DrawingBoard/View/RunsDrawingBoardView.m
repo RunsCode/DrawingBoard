@@ -20,6 +20,7 @@
 @interface RunsDrawingBoardView ()<UITextFieldDelegate>
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipTap;
+@property (nonatomic, strong) UIPanGestureRecognizer *panTap;
 @property (nonatomic, strong) id<RunsDrawingBoardProxyProtocol> proxy;
 @end
 
@@ -37,10 +38,14 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self initMember];
-    self.swipTap = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(onSwipDown:)];
+    self.swipTap = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipDown:)];
     self.swipTap.direction = UISwipeGestureRecognizerDirectionDown;
     self.swipTap.enabled = NO;
+    self.panTap = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePanGesture:)];
+    self.panTap.enabled = NO;
     [self addGestureRecognizer:self.swipTap];
+    [self addGestureRecognizer:self.panTap];
+    [self.panTap requireGestureRecognizerToFail:self.swipTap];
 }
 
 - (void)initMember {
@@ -66,12 +71,25 @@
     _brushModel = brushModel;
     self.textField.hidden = brushModel.shape != ShapeType_Text;
     self.swipTap.enabled = brushModel.shape == ShapeType_Text;
+    self.panTap.enabled = brushModel.shape == ShapeType_Text;
+    [self endEditing:brushModel.shape != ShapeType_Text];
 }
 
 #pragma mark -- UITextFieldDelegate
 
-- (void)onSwipDown:(UISwipeGestureRecognizer*)sender {
+- (void)handleSwipDown:(UISwipeGestureRecognizer*)sender {
     [self endEditing:YES];
+}
+
+- (void)handlePanGesture:(UIPanGestureRecognizer*)sender {
+    
+    CGPoint point = [sender locationInView:self];
+    CGFloat offetX = self.textField.frame.size.width * 0.5 ;
+    CGFloat offetY = self.textField.frame.size.height * 0.5 ;
+    CGRect frame = CGRectMake(point.x - offetX, point.y - offetY, self.textField.frame.size.width, self.textField.frame.size.height);
+    [self updateTextFieldWithFrame:frame];
+    [self.proxy drawTextChangedWithFrame:frame text:self.textField.text];
+    [self setNeedsDisplay];
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
@@ -92,8 +110,6 @@
 }
 
 - (void)textFieldDidChange:(UITextField *)textField {
-    RunsBrushCharacterModel *model = (RunsBrushCharacterModel *)(self.brushModel);
-    if (!model) return;
     CGRect frame = [self calculteFrameWithText:textField.text];
     [self updateTextFieldWithFrame:frame];
     [self.proxy drawTextChangedWithFrame:frame text:textField.text];
@@ -101,8 +117,6 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    RunsBrushCharacterModel *model = (RunsBrushCharacterModel *)(self.copyByBrush);
-    if (!model) return;
     CGRect frame = [self calculteFrameWithText:textField.text];
     [self updateTextFieldWithFrame:frame];
     [self.proxy drawTextEndedWithFrame:frame text:textField.text];
@@ -123,16 +137,16 @@
         [self.brushModel.frames addObject:value];
         UITextField *field = [self textField:point];
         [field becomeFirstResponder];
-        
-        
+        return;
+    }
+    if (self.brushModel.shape != ShapeType_Text) {
+        [self.proxy drawBeganWithPoint:point brush:self.copyByBrush];
+        if ([self.delegate respondsToSelector:@selector(drawingBoardView:didBeganPoint:)]) {
+            [self.delegate drawingBoardView:self didBeganPoint:point];
+        }
         return;
     }
     
-    [self.proxy drawBeganWithPoint:point brush:self.copyByBrush];
-    
-    if ([self.delegate respondsToSelector:@selector(drawingBoardView:didBeganPoint:)]) {
-        [self.delegate drawingBoardView:self didBeganPoint:point];
-    }
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -204,7 +218,7 @@
         return _textField;
     }
     RunsBrushCharacterModel *model = (RunsBrushCharacterModel *)(self.brushModel);
-    if (!model) return nil;
+    if (!model || model.shape != ShapeType_Text) return nil;
     CGRect frame = CGRectMake(point.x, point.y, model.fontSize + 2, model.fontSize + 2);
     UITextField *textField = [[UITextField alloc] initWithFrame:frame];
     textField.textColor = [UIColor clearColor];
@@ -225,8 +239,12 @@
 
 - (CGRect)calculteFrameWithText:(NSString *)text {
     RunsBrushCharacterModel *model = (RunsBrushCharacterModel *)(self.copyByBrush);
-    if (!model) return CGRectZero;
+    if (!model || model.shape != ShapeType_Text) return CGRectZero;
     CGPoint point = model.frames.firstObject.CGRectValue.origin;
+    if (!CGRectEqualToRect(self.textField.frame, CGRectZero)) {
+        point = self.textField.frame.origin;
+    }
+    
     UIFont *font = [UIFont systemFontOfSize:model.fontSize];
     CGFloat width = self.frame.size.width - point.x - 10;
     CGFloat height = self.frame.size.height - point.y - 10;
