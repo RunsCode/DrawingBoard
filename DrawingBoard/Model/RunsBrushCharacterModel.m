@@ -8,6 +8,7 @@
 
 #import "RunsBrushCharacterModel.h"
 #import <objc/runtime.h>
+#import "NSObject+DeepCopy.h"
 
 @implementation RunsBrushCharacterModel
 
@@ -19,6 +20,10 @@
     model.fontSize = self.fontSize;
     model.frames = self.frames;
     return model;
+}
+
+- (instancetype)deepCopy {
+    return [self rs_deepCopy];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -67,6 +72,47 @@
 + (instancetype)defaultWithShape:(ShapeType)shape text:(NSString *)text color:(UIColor *)color font:(CGFloat)fontSize frame:(CGRect)frame {
     RunsBrushCharacterModel *model = [[RunsBrushCharacterModel alloc] initWithShape:shape text:text color:color font:fontSize frame:frame];
     return model;
+}
+
+- (NSString *)debugDescription {
+    
+    NSString *shape = nil;
+    switch (self.shape) {
+        case ShapeType_Polyline:
+            shape = @"折线";
+            break;
+        case ShapeType_Beeline:
+            shape = @"直线";
+            break;
+        case ShapeType_Square:
+            shape = @"矩形";
+            break;
+        case ShapeType_Elipse:
+            shape = @"椭圆";
+            break;
+        case ShapeType_Round:
+            shape = @"正圆";
+            break;
+        case ShapeType_Text:
+            shape = @"文字";
+            break;
+        case ShapeType_Eraser:
+            shape = @"橡皮擦";
+            break;
+            
+        default:
+            break;
+    }
+    
+    NSString *debug = [NSString stringWithFormat:@"shape : %@, fontsize : %f, text: %@ \n", shape, self.fontSize, self.character];
+    NSMutableString *point = [NSMutableString string];
+    [self.frames enumerateObjectsUsingBlock:^(NSValue * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CGRect frame = obj.CGRectValue;
+        NSString *str = [NSString stringWithFormat:@"x : %f,  y : %f,  w : %f,  h : %f \n",frame.origin.x,frame.origin.y,frame.size.width,frame.size.height];
+        [point appendString:str];
+    }];
+    
+    return [NSString stringWithFormat:@"%@%@",debug,point];
 }
 
 @end

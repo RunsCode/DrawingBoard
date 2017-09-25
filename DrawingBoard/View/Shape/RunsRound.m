@@ -35,7 +35,7 @@
     if (brush.isFill) {
         CGContextSetFillColorWithColor(context, brush.fillColor.CGColor);
     }
-    
+    CGContextSetBlendMode(context,kCGBlendModeNormal);
     CGContextAddArc(context, origin.x, origin.y, radius, 0, 2 * M_PI, 0);
     CGContextDrawPath(context, brush.isFill ? kCGPathFillStroke : kCGPathStroke);
 }

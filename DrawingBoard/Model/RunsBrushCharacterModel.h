@@ -13,9 +13,10 @@
 
 @property (nonatomic, assign) ShapeType shape;
 @property (nonatomic, strong) UIColor *color;
+@property (nonatomic, assign) CGFloat width;
 @property (nonatomic, copy) NSMutableArray<NSValue*> *frames;
 
-@property (nonatomic, assign) NSUInteger fontSize;
+@property (nonatomic, assign) CGFloat fontSize;
 @property (nonatomic, copy) NSString *character;
 
 + (instancetype)defaultWithShape:(ShapeType)shape text:(NSString *)text color:(UIColor *)color font:(CGFloat)fontSize frame:(CGRect)frame;

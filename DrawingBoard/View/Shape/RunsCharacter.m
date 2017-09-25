@@ -19,6 +19,9 @@
 
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush {
     
+    if (!brush.color)  return;
+
+    
     if (![brush isKindOfClass:RunsBrushCharacterModel.class]) {
         NSLog(@"RunsCharacter drawContext : 绘制文字 参数类型错误");
         return;
@@ -34,7 +37,8 @@
         NSLog(@"RunsCharacter drawContext : 绘制文字 文字起点坐标为空");
         return;
     }
-    
+    CGContextSetBlendMode(context,kCGBlendModeNormal);
+
     CGRect frame = model.frames.firstObject.CGRectValue;
     if (CGSizeEqualToSize(frame.size, CGSizeZero)) {
         CGFloat width = UIScreen.mainScreen.bounds.size.width - frame.origin.x - 10;

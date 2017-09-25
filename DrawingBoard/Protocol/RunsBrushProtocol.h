@@ -8,19 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "RunsShapeProtocol.h"
 
+#import "RunsShapeProtocol.h"
 
 @protocol RunsBrushProtocol <NSObject>
 
 @required
+@property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) ShapeType shape;
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic, copy) NSMutableArray<NSValue*> *frames;
 
 @optional
 @property (nonatomic, assign) BOOL isFill;
-@property (nonatomic, assign) NSUInteger width;
 @property (nonatomic, strong) UIColor *fillColor;
 
 /**
@@ -32,4 +32,5 @@
  @return 返回实例
  */
 + (instancetype)brushWithShape:(ShapeType)shape color:(UIColor *)color thickness:(CGFloat)width;
+- (instancetype)deepCopy;
 @end

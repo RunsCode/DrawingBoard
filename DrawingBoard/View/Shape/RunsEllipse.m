@@ -33,7 +33,7 @@
     if (brush.isFill) {
         CGContextSetFillColorWithColor(context, brush.fillColor.CGColor);
     }
-
+    CGContextSetBlendMode(context,kCGBlendModeNormal);
     CGContextAddEllipseInRect(context, bounds);
     CGContextDrawPath(context, brush.isFill ? kCGPathFillStroke : kCGPathStroke);
 }

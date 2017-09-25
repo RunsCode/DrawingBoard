@@ -10,15 +10,23 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-@protocol RunsDrawingBoardOperatingProtocol;
+@protocol RunsDrawingBoardOperatingProtocol,RunsBrushProtocol;
+
 @protocol RunsDrawingBoardProxyProtocol <RunsDrawingBoardOperatingProtocol>
 
-- (void)drawWithContext:(CGContextRef)context;
+@property (nonatomic, strong, readonly) id<RunsBrushProtocol> currentBrush;
+@property (nonatomic, strong, readonly) NSMutableArray<id<RunsBrushProtocol>> *brushes;
 
+- (void)drawWithContext:(CGContextRef)context;
+//实时绘制
 - (void)drawBeganWithPoint:(CGPoint)point brush:(id<RunsBrushProtocol>)brush;
 - (void)drawMovedWithPoint:(CGPoint)point;
 - (void)drawEndedWithPoint:(CGPoint)point;
 
+//段落绘制
+- (void)drawPartWithBrush:(id<RunsBrushProtocol>)brush;
+
+//绘制文字
 - (void)drawTextBeganWithFrame:(CGRect)frame brush:(id<RunsBrushProtocol>)brush;
 - (void)drawTextChangedWithFrame:(CGRect)frame text:(NSString *)text;
 - (void)drawTextEndedWithFrame:(CGRect)frame text:(NSString *)text;

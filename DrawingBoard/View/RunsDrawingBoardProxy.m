@@ -7,29 +7,30 @@
 //
 
 #import "RunsDrawingBoardProxy.h"
+
+//model
 #import "RunsDrawingBoardOperatingProtocol.h"
 #import "RunsDrawingBoardProxyProtocol.h"
-#import "RunsBrushProtocol.h"
+#import "RunsBrushCharacterModel.h"
 
+//shape
 #import "RunsPolyline.h"
 #import "RunsBeeline.h"
 #import "RunsSquare.h"
 #import "RunsRound.h"
 #import "RunsEllipse.h"
 #import "RunsCharacter.h"
+#import "RunsEraser.h"
 
-#import "RunsBrushCharacterModel.h"
+//protocol
+#import "RunsBrushProtocol.h"
 
-@implementation RunsDrawingBoardOperate
-
-@end
+#import "RunsDrawingBoardOperate.h"
 
 @interface RunsDrawingBoardProxy ()<RunsDrawingBoardProxyProtocol>
 @property (nonatomic, strong) NSMutableArray<id<RunsShapeProtocol>> *shapes;
-@property (nonatomic, strong) NSMutableArray<id<RunsBrushProtocol>> *brushes;
-@property (nonatomic, strong) NSMutableArray<RunsDrawingBoardOperate *> *brushesCache;//缓存操作记录
 @property (nonatomic, strong) id<RunsBrushProtocol> currentBrush;
-
+@property (nonatomic, strong) RunsDrawingBoardOperate *operate;
 @end
 
 @implementation RunsDrawingBoardProxy
@@ -42,29 +43,73 @@
     self = [super init];
     if (self) {
         _brushes = [NSMutableArray array];
-        _brushesCache = [NSMutableArray array];
+        _operate = [RunsDrawingBoardOperate new];
     }
     return self;
 }
 
+#pragma mark -- RunsDrawingBoardOperatingProtocol
+
 - (void)undo:(BOOL)canRedo {
-    if (self.brushes.count <= 0) return;
-    id<RunsBrushProtocol> brush = self.brushes.lastObject;
-    [self.brushes removeLastObject];
-    if (!canRedo) return;
-    [self cacheBrush:brush];
+    _brushes = _operate.undo.brushes;
 }
 
 - (void)redo {
-    NSArray<id<RunsBrushProtocol>> *brushes = self.brushesCache.lastObject.brushes;
-    if (brushes.count <= 0) return;
-    [self.brushesCache removeLastObject];
-    [self.brushes addObjectsFromArray:brushes];
+    _brushes = _operate.redo.brushes;
 }
 
-- (void)clear {
-    [self cacheBrushes:self.brushes.copy];
-    [self.brushes removeAllObjects];
+- (void)clear:(BOOL)canUndo {
+    if (!canUndo) {
+        [_brushes removeAllObjects];
+        return;
+    }
+    _brushes = _operate.clear.brushes;
+}
+
+#pragma mark -- 绘制任何几何图形 RunsDrawingBoardProxyProtocol
+
+- (id<RunsBrushProtocol>)currentBrush {
+    return _brushes.lastObject;
+}
+
+- (void)drawWithContext:(CGContextRef)context {
+    [_brushes enumerateObjectsUsingBlock:^(id<RunsBrushProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        id<RunsShapeProtocol> shape = [self shapeRef:obj.shape];
+        [shape drawContext:context brush:obj];
+    }];
+}
+
+- (void)drawBeganWithPoint:(CGPoint)point brush:(id<RunsBrushProtocol>)brush {
+    if (!brush || brush.shape == ShapeType_Text) return;
+    [self drawWithBrush:brush];
+
+    CGRect rect = CGRectMake(point.x, point.y, 0, 0);
+    NSValue *value = [NSValue valueWithCGRect:rect];
+    if (!_brushes.lastObject.frames) {
+        _brushes.lastObject.frames = [NSMutableArray array];
+    }
+    [_brushes.lastObject.frames addObject:value];
+}
+
+- (void)drawMovedWithPoint:(CGPoint)point {
+    if (_brushes.lastObject.shape == ShapeType_Text) return;
+    CGRect rect = CGRectMake(point.x, point.y, 0, 0);
+    NSValue *value = [NSValue valueWithCGRect:rect];
+    [_brushes.lastObject.frames addObject:value];
+}
+
+- (void)drawEndedWithPoint:(CGPoint)point {
+    if (_brushes.lastObject.shape == ShapeType_Text) return;
+    CGRect rect = CGRectMake(point.x, point.y, 0, 0);
+    NSValue *value = [NSValue valueWithCGRect:rect];
+    [_brushes.lastObject.frames addObject:value];
+}
+
+#pragma mark -- 分段直接绘制 一般来源于网络 一段一段的按坐标绘制 包含文字和图片
+
+- (void)drawPartWithBrush:(id<RunsBrushProtocol>)brush {
+    if (!brush) return;
+    [self drawWithBrush:brush];
 }
 
 #pragma mark -- 绘制文字
@@ -75,7 +120,7 @@
 }
 
 - (void)drawTextChangedWithFrame:(CGRect)frame text:(NSString *)text {
-    RunsBrushCharacterModel *model = (RunsBrushCharacterModel *)(self.brushes.lastObject);
+    RunsBrushCharacterModel *model = (RunsBrushCharacterModel *)(_brushes.lastObject);
     if (!model || model.shape != ShapeType_Text) return;
     model.character = text;
     [model.frames removeAllObjects];
@@ -84,7 +129,7 @@
 }
 
 - (void)drawTextEndedWithFrame:(CGRect)frame text:(NSString *)text {
-    RunsBrushCharacterModel *model = (RunsBrushCharacterModel *)(self.brushes.lastObject);
+    RunsBrushCharacterModel *model = (RunsBrushCharacterModel *)(_brushes.lastObject);
     if (!model || model.shape != ShapeType_Text) return;
     model.character = text;
     [model.frames removeAllObjects];
@@ -92,57 +137,11 @@
     [model.frames addObject:value];
 }
 
-#pragma mark -- 绘制任何几何图形
-
-- (void)drawBeganWithPoint:(CGPoint)point brush:(id<RunsBrushProtocol>)brush {
-    if (!brush || brush.shape == ShapeType_Text) return;
-    [self drawWithBrush:brush];
-
-    CGRect rect = CGRectMake(point.x, point.y, 0, 0);
-    NSValue *value = [NSValue valueWithCGRect:rect];
-    if (!self.brushes.lastObject.frames) {
-        self.brushes.lastObject.frames = [NSMutableArray array];
-    }
-    [self.brushes.lastObject.frames addObject:value];
-}
-
-- (void)drawMovedWithPoint:(CGPoint)point {
-    if (self.brushes.lastObject.shape == ShapeType_Text) return;
-    CGRect rect = CGRectMake(point.x, point.y, 0, 0);
-    NSValue *value = [NSValue valueWithCGRect:rect];
-    [self.brushes.lastObject.frames addObject:value];
-}
-
-- (void)drawEndedWithPoint:(CGPoint)point {
-    if (self.brushes.lastObject.shape == ShapeType_Text) return;
-    CGRect rect = CGRectMake(point.x, point.y, 0, 0);
-    NSValue *value = [NSValue valueWithCGRect:rect];
-    [self.brushes.lastObject.frames addObject:value];
-}
-
-- (void)drawWithContext:(CGContextRef)context {
-    [self.brushes enumerateObjectsUsingBlock:^(id<RunsBrushProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        id<RunsShapeProtocol> shape = [self shapeRef:obj.shape];
-        [shape drawContext:context brush:obj];
-    }];
-}
-
 #pragma mark -- Private Method
 
 - (void)drawWithBrush:(id<RunsBrushProtocol>)brush {
-    [self.brushes addObject:brush];
-    //新增操作 清空操作缓存记录
-    [self.brushesCache removeAllObjects];
-}
-
-- (void)cacheBrush:(id<RunsBrushProtocol>)brush {
-    [self cacheBrushes:@[brush]];
-}
-
-- (void)cacheBrushes:(NSArray<id<RunsBrushProtocol>>*)brushes {
-    RunsDrawingBoardOperate *op = [RunsDrawingBoardOperate new];
-    op.brushes = brushes;
-    [self.brushesCache addObject:op];
+    [_brushes addObject:brush];
+    [_operate push:brush];
 }
 
 - (id<RunsShapeProtocol>)shapeRef:(ShapeType)type {
@@ -160,6 +159,7 @@
     [array addObject:(id<RunsShapeProtocol>)RunsEllipse.new];
     [array addObject:(id<RunsShapeProtocol>)RunsRound.new];
     [array addObject:(id<RunsShapeProtocol>)RunsCharacter.new];
+    [array addObject:(id<RunsShapeProtocol>)RunsEraser.new];
     _shapes = array;
     return array;
 }

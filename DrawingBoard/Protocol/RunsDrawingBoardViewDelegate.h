@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@protocol RunsDrawingBoardViewProtocol;
+// RunsDrawingBoardViewProtocol 这里不知道为什么又不需要导入任何头文件或者引用就能编译通过 FUCK Xcode
+
 @protocol RunsDrawingBoardViewDelegate <NSObject>
 - (void)drawingBoardView:(id<RunsDrawingBoardViewProtocol>)boardView didBeganPoint:(CGPoint)point;
 - (void)drawingBoardView:(id<RunsDrawingBoardViewProtocol>)boardView didMovedPoint:(CGPoint)point;
-- (void)drawingBoardView:(id<RunsDrawingBoardViewProtocol>)boardView didEndedPoint:(CGPoint)point;
+- (void)drawingBoardView:(id<RunsDrawingBoardViewProtocol>)boardView didEndedPoint:(CGPoint)point brush:(id<RunsBrushProtocol>)brush;
 @end

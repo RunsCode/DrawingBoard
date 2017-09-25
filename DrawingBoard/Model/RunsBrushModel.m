@@ -8,6 +8,7 @@
 
 #import "RunsBrushModel.h"
 #import <objc/runtime.h>
+#import "NSObject+DeepCopy.h"
 
 @implementation RunsBrushModel
 
@@ -20,6 +21,10 @@
     model.frames = self.frames;
     model.isFill = self.isFill;
     return model;
+}
+
+- (instancetype)deepCopy {
+    return [self rs_deepCopy];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
@@ -104,6 +109,46 @@
                                                            frames:frames
                                                              fill:NO];
     return brush;
+}
+
+- (NSString *)debugDescription {
+    NSString *shape = nil;
+    switch (self.shape) {
+        case ShapeType_Polyline:
+            shape = @"折线";
+            break;
+        case ShapeType_Beeline:
+            shape = @"直线";
+            break;
+        case ShapeType_Square:
+            shape = @"矩形";
+            break;
+        case ShapeType_Elipse:
+            shape = @"椭圆";
+            break;
+        case ShapeType_Round:
+            shape = @"正圆";
+            break;
+        case ShapeType_Text:
+            shape = @"文字";
+            break;
+        case ShapeType_Eraser:
+            shape = @"橡皮擦";
+            break;
+            
+        default:
+            break;
+    }
+    
+    NSString *debug = [NSString stringWithFormat:@"shape : %@, width : %f \n", shape, self.width];
+    NSMutableString *point = [NSMutableString string];
+    [self.frames enumerateObjectsUsingBlock:^(NSValue * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CGRect frame = obj.CGRectValue;
+        NSString *str = [NSString stringWithFormat:@"x : %f,  y : %f,  w : %f,  h : %f \n",frame.origin.x,frame.origin.y,frame.size.width,frame.size.height];
+        [point appendString:str];
+    }];
+    
+    return [NSString stringWithFormat:@"%@%@",debug,point];
 }
 
 @end

@@ -10,10 +10,7 @@
 
 @protocol RunsBrushProtocol;
 
-@interface RunsDrawingBoardOperate : NSObject
-@property (nonatomic, strong) NSArray<id<RunsBrushProtocol>> *brushes;
-@end
-
 @interface RunsDrawingBoardProxy : NSObject
-
+@property (nonatomic, strong, readonly) id<RunsBrushProtocol> currentBrush;
+@property (nonatomic, strong, readonly) NSMutableArray<id<RunsBrushProtocol>> *brushes;
 @end

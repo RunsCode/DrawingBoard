@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@protocol RunsBrushProtocol,RunsDrawingBoardViewDelegate;
+
 @protocol RunsDrawingBoardOperatingProtocol <NSObject>
 
 /**
@@ -23,8 +23,8 @@
 - (void)redo;
 
 /**
- 清屏
+ 清屏 可恢复
  */
-- (void)clear;
-
+- (void)clear:(BOOL)canUndo;
 @end
+

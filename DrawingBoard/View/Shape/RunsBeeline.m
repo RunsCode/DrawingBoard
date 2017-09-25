@@ -33,6 +33,7 @@
     CGPoint next = brush.frames.lastObject.CGRectValue.origin;
     CGContextAddLineToPoint(context, next.x, next.y);
     CGContextSetStrokeColorWithColor(context, brush.color.CGColor);
+    CGContextSetBlendMode(context,kCGBlendModeNormal);
     CGContextSetLineWidth(context, brush.width);
     CGContextStrokePath(context);
 }

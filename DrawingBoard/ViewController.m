@@ -41,12 +41,12 @@
     [self.controlPanelTableView reloadData];
     self.drawingBoardView.hidden = NO;
     [self.drawingBoardView removeFromSuperview];
-//    [self.runsDrawingBoardView removeFromSuperview];
     
     self.brushColor = [UIColor redColor];
     id<RunsBrushProtocol> brush = [RunsBrushModel brushWithShape:ShapeType_Polyline color:self.brushColor thickness:3];
     self.runsDrawingBoardView.brushModel = brush;
     self.runsDrawingBoardView.delegate = self;
+    self.runsDrawingBoardView.drawEnable = YES;
 
 }
 
@@ -60,10 +60,9 @@
     NSLog(@"didMovedPoint x = %f, y = %f",point.x, point.y);
 }
 
-- (void)drawingBoardView:(id<RunsDrawingBoardViewProtocol>)boardView didEndedPoint:(CGPoint)point {
+- (void)drawingBoardView:(id<RunsDrawingBoardViewProtocol>)boardView didEndedPoint:(CGPoint)point brush:(id<RunsBrushProtocol>)brush { 
     NSLog(@"didEndedPoint x = %f, y = %f",point.x, point.y);
 }
-
 
 #pragma mark -- UITableViewDelegate, UITableViewDataSource
 
@@ -107,7 +106,7 @@
                 break;
                 
             case MenuType_Clear:
-                [self.runsDrawingBoardView clear];
+                [self.runsDrawingBoardView clear:YES];
                 break;
                 
             default:
@@ -183,8 +182,9 @@
     RunsColorPickerView *colorPickerView = [[RunsColorPickerView alloc] init];//
     colorPickerView.center = self.view.center;
     [self.view addSubview:colorPickerView];
-     _colorPickerView = (RunsColorPickerView<RunsControlProtocol> *)colorPickerView;
+    _colorPickerView = (RunsColorPickerView<RunsControlProtocol> *)colorPickerView;
     [_colorPickerView setType:MenuType_LineColor];
     return _colorPickerView;
 }
+
 @end

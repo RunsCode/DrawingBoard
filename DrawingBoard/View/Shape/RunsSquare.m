@@ -27,11 +27,10 @@
     CGFloat width = next.x - origin.x;
     CGFloat height = next.y - origin.y;
     CGRect bounds = CGRectMake(origin.x, origin.y, width, height);
-    
     CGContextSetLineWidth(context, brush.width);
     CGContextSetStrokeColorWithColor(context, brush.color.CGColor);
     CGContextStrokeRect(context, bounds);
-    
+    CGContextSetBlendMode(context,kCGBlendModeNormal);
     if (brush.isFill) {
         CGContextSetFillColorWithColor(context,brush.fillColor.CGColor);
         CGContextFillRect(context, bounds);

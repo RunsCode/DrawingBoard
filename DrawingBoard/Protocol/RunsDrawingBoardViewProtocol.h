@@ -12,8 +12,12 @@
 @protocol RunsDrawingBoardViewDelegate,RunsDrawingBoardOperatingProtocol,RunsBrushProtocol;
 
 @protocol RunsDrawingBoardViewProtocol <RunsDrawingBoardOperatingProtocol>
-
+@property (nonatomic, assign) BOOL drawEnable;
 @property (nonatomic, strong) id<RunsBrushProtocol> brushModel;
+@property (nonatomic, strong, readonly) NSArray<id<RunsBrushProtocol>> *brushes;
 @property (nonatomic, weak) id<RunsDrawingBoardViewDelegate> delegate;
+
+- (void)restore;
+- (void)drawPartWithBrush:(id<RunsBrushProtocol>)brush;
 
 @end

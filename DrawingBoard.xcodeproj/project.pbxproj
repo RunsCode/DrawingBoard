@@ -27,6 +27,11 @@
 		AECC350B1F42EB4600267F95 /* RunsDrawingBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = AECC350A1F42EB4600267F95 /* RunsDrawingBoardView.m */; };
 		AECC350F1F43025B00267F95 /* RunsDrawingBoardProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = AECC350E1F43025B00267F95 /* RunsDrawingBoardProxy.m */; };
 		AECC35161F45434B00267F95 /* RunsTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = AECC35151F45434B00267F95 /* RunsTextFieldView.m */; };
+		AED9556B1F78D7B100BBBDD2 /* RunsDrawingBoardOperate.m in Sources */ = {isa = PBXBuildFile; fileRef = AED955691F78D7B100BBBDD2 /* RunsDrawingBoardOperate.m */; };
+		AED9556E1F78D7F200BBBDD2 /* RunsEraser.m in Sources */ = {isa = PBXBuildFile; fileRef = AED9556D1F78D7F200BBBDD2 /* RunsEraser.m */; };
+		AED955711F78D8BF00BBBDD2 /* NSObject+DeepCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = AED955701F78D8BF00BBBDD2 /* NSObject+DeepCopy.m */; };
+		AED955741F78D93800BBBDD2 /* GKSimpleAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = AED955731F78D93800BBBDD2 /* GKSimpleAPI.m */; };
+		AED955771F78D98B00BBBDD2 /* UIImage+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = AED955761F78D98B00BBBDD2 /* UIImage+Category.m */; };
 		E0C8FA8CB42E471514F26D67 /* libPods-DrawingBoard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 717B06551F582C44EAD7445B /* libPods-DrawingBoard.a */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +83,16 @@
 		AECC35131F44223D00267F95 /* RunsDrawingBoardViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunsDrawingBoardViewProtocol.h; sourceTree = "<group>"; };
 		AECC35141F45434B00267F95 /* RunsTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunsTextFieldView.h; sourceTree = "<group>"; };
 		AECC35151F45434B00267F95 /* RunsTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunsTextFieldView.m; sourceTree = "<group>"; };
+		AED955691F78D7B100BBBDD2 /* RunsDrawingBoardOperate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunsDrawingBoardOperate.m; sourceTree = "<group>"; };
+		AED9556A1F78D7B100BBBDD2 /* RunsDrawingBoardOperate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunsDrawingBoardOperate.h; sourceTree = "<group>"; };
+		AED9556C1F78D7F200BBBDD2 /* RunsEraser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RunsEraser.h; path = "../../../../../../Work/OU课堂/Project/client-ipad/OU_iPad/OU_iPad/Classroom/Courseware/View/DrawingBoard/View/Shape/RunsEraser.h"; sourceTree = "<group>"; };
+		AED9556D1F78D7F200BBBDD2 /* RunsEraser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RunsEraser.m; path = "../../../../../../Work/OU课堂/Project/client-ipad/OU_iPad/OU_iPad/Classroom/Courseware/View/DrawingBoard/View/Shape/RunsEraser.m"; sourceTree = "<group>"; };
+		AED9556F1F78D8BF00BBBDD2 /* NSObject+DeepCopy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+DeepCopy.h"; sourceTree = "<group>"; };
+		AED955701F78D8BF00BBBDD2 /* NSObject+DeepCopy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DeepCopy.m"; sourceTree = "<group>"; };
+		AED955721F78D93700BBBDD2 /* GKSimpleAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKSimpleAPI.h; sourceTree = "<group>"; };
+		AED955731F78D93800BBBDD2 /* GKSimpleAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKSimpleAPI.m; sourceTree = "<group>"; };
+		AED955751F78D98B00BBBDD2 /* UIImage+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Category.h"; sourceTree = "<group>"; };
+		AED955761F78D98B00BBBDD2 /* UIImage+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Category.m"; sourceTree = "<group>"; };
 		FA1C96791798FE48B9F81DBE /* Pods-DrawingBoard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrawingBoard.release.xcconfig"; path = "Pods/Target Support Files/Pods-DrawingBoard/Pods-DrawingBoard.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,6 +153,10 @@
 				AECC34C31F4181E800267F95 /* AppDelegate.m */,
 				AECC34C51F4181E800267F95 /* ViewController.h */,
 				AECC34C61F4181E800267F95 /* ViewController.m */,
+				AED955721F78D93700BBBDD2 /* GKSimpleAPI.h */,
+				AED955731F78D93800BBBDD2 /* GKSimpleAPI.m */,
+				AED955751F78D98B00BBBDD2 /* UIImage+Category.h */,
+				AED955761F78D98B00BBBDD2 /* UIImage+Category.m */,
 				AECC34C81F4181E800267F95 /* Main.storyboard */,
 				AECC34CB1F4181E800267F95 /* Assets.xcassets */,
 				AECC34CD1F4181E800267F95 /* LaunchScreen.storyboard */,
@@ -178,6 +197,8 @@
 				AECC34EC1F428E7200267F95 /* RunsBrushModel.m */,
 				AECC35061F42E1A500267F95 /* RunsBrushCharacterModel.h */,
 				AECC35071F42E1A500267F95 /* RunsBrushCharacterModel.m */,
+				AED9556F1F78D8BF00BBBDD2 /* NSObject+DeepCopy.h */,
+				AED955701F78D8BF00BBBDD2 /* NSObject+DeepCopy.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -185,6 +206,8 @@
 		AECC34E11F41AE0E00267F95 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AED9556A1F78D7B100BBBDD2 /* RunsDrawingBoardOperate.h */,
+				AED955691F78D7B100BBBDD2 /* RunsDrawingBoardOperate.m */,
 				AECC34EE1F4293B400267F95 /* Shape */,
 				AECC34E21F41AE0E00267F95 /* GKDrawingBoardView.h */,
 				AECC34E31F41AE0E00267F95 /* GKDrawingBoardView.m */,
@@ -203,6 +226,8 @@
 		AECC34EE1F4293B400267F95 /* Shape */ = {
 			isa = PBXGroup;
 			children = (
+				AED9556C1F78D7F200BBBDD2 /* RunsEraser.h */,
+				AED9556D1F78D7F200BBBDD2 /* RunsEraser.m */,
 				AECC34F71F429F9C00267F95 /* RunsPolyline.h */,
 				AECC34F81F429F9C00267F95 /* RunsPolyline.m */,
 				AECC34F41F42987200267F95 /* RunsBeeline.h */,
@@ -249,7 +274,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = Runs;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = Olacio;
 				TargetAttributes = {
 					AECC34BB1F4181E800267F95 = {
@@ -343,8 +368,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AED955741F78D93800BBBDD2 /* GKSimpleAPI.m in Sources */,
 				AECC350F1F43025B00267F95 /* RunsDrawingBoardProxy.m in Sources */,
 				AECC35051F42E0A800267F95 /* RunsCharacter.m in Sources */,
+				AED955711F78D8BF00BBBDD2 /* NSObject+DeepCopy.m in Sources */,
+				AED9556B1F78D7B100BBBDD2 /* RunsDrawingBoardOperate.m in Sources */,
 				AECC34E81F41AE4600267F95 /* RunsColorPickerView.m in Sources */,
 				AECC35081F42E1A500267F95 /* RunsBrushCharacterModel.m in Sources */,
 				AECC34ED1F428E7200267F95 /* RunsBrushModel.m in Sources */,
@@ -353,7 +381,9 @@
 				AECC350B1F42EB4600267F95 /* RunsDrawingBoardView.m in Sources */,
 				AECC35161F45434B00267F95 /* RunsTextFieldView.m in Sources */,
 				AECC34C71F4181E800267F95 /* ViewController.m in Sources */,
+				AED955771F78D98B00BBBDD2 /* UIImage+Category.m in Sources */,
 				AECC34C41F4181E800267F95 /* AppDelegate.m in Sources */,
+				AED9556E1F78D7F200BBBDD2 /* RunsEraser.m in Sources */,
 				AECC34F61F42987200267F95 /* RunsBeeline.m in Sources */,
 				AECC34E41F41AE0E00267F95 /* CellDataSource.m in Sources */,
 				AECC34F91F429F9C00267F95 /* RunsPolyline.m in Sources */,
@@ -395,7 +425,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -403,7 +435,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -444,7 +480,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -452,7 +490,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
