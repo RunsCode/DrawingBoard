@@ -18,7 +18,7 @@
 
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush {
     if (brush.frames.count <= 0) {
-        NSLog(@"RunsPolyline drawContext : 画任意折线 坐标集合长度小于0");
+        RunsLogEX(@"RunsPolyline drawContext : 画任意折线 坐标集合长度小于0");
         return;
     }
     CGPoint origin = brush.frames.firstObject.CGRectValue.origin;

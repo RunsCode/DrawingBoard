@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+@interface DPPoint : OUPoint
+@property (nonatomic, assign) NSInteger index;
+@end
 @interface RunsPolyline : NSObject
 
 @end

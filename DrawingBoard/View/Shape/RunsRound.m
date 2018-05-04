@@ -20,7 +20,7 @@
 
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush {
     if (brush.frames.count < 2) {
-        NSLog(@"RunsRound drawContext : 画正圆 坐标集合长度小于2");
+        RunsLogEX(@"RunsRound drawContext : 画正圆 坐标集合长度小于2");
         return;
     }
     CGPoint origin = brush.frames.firstObject.CGRectValue.origin;

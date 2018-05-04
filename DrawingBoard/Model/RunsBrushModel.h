@@ -11,6 +11,8 @@
 
 
 @interface RunsBrushModel : NSObject<RunsBrushProtocol, NSCopying, NSCoding>
+
+@property(nonatomic, copy) NSString *brushId;
 @property (nonatomic, assign) BOOL isFill;
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) ShapeType shape;

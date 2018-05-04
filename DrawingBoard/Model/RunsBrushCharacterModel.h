@@ -10,7 +10,7 @@
 #import "RunsBrushProtocol.h"
 
 @interface RunsBrushCharacterModel : NSObject<RunsBrushProtocol, NSCopying, NSCoding>
-
+@property(nonatomic, copy) NSString *brushId;
 @property (nonatomic, assign) ShapeType shape;
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic, assign) CGFloat width;

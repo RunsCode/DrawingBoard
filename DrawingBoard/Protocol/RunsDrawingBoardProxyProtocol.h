@@ -31,4 +31,8 @@
 - (void)drawTextChangedWithFrame:(CGRect)frame text:(NSString *)text;
 - (void)drawTextEndedWithFrame:(CGRect)frame text:(NSString *)text;
 
+//擦除 更新
+- (void)eraseBrushIds:(NSArray <NSString *>*)brushIds;
+- (void)updateBrushes:(NSArray <id<RunsBrushProtocol>>*)brushes;
+
 @end

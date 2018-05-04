@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, OperationalType) {
 
 @interface RunsDrawingBoardOperate : NSObject
 - (void)push:(id<RunsBrushProtocol>)brush;
+- (void)pop:(id<RunsBrushProtocol>)brush;
 - (RunsDrawingBoardOperateEntity *)undo;
 - (RunsDrawingBoardOperateEntity *)redo;
 - (RunsDrawingBoardOperateEntity *)clear;

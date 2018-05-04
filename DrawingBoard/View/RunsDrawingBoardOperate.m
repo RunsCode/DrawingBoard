@@ -27,7 +27,7 @@
 @implementation RunsDrawingBoardOperate
 
 - (void)dealloc {
-    
+    RunsReleaseLog()
 }
 
 - (instancetype)init {
@@ -46,6 +46,12 @@
     [_recordStack addObject:brush];
 }
 
+- (void)pop:(id<RunsBrushProtocol>)brush {
+    _canRedo = YES;
+    [_cacheStack addObject:brush];
+    [_recordStack removeObject:brush];
+}
+
 - (RunsDrawingBoardOperateEntity *)undo {
     _canRedo = YES;
     _currentOperate = Operate_Undo;
@@ -55,7 +61,7 @@
 - (RunsDrawingBoardOperateEntity *)redo {
     if (!_canRedo)  {
         RunsDrawingBoardOperateEntity *entity = [RunsDrawingBoardOperateEntity new];
-        entity.brushes = [_recordStack copy];
+        entity.brushes = [_recordStack mutableCopy];
         entity.shouldDisplay = NO;
         return entity;
     }

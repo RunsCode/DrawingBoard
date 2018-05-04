@@ -19,5 +19,9 @@
 
 - (void)restore;
 - (void)drawPartWithBrush:(id<RunsBrushProtocol>)brush;
+//擦除 更新
+- (void)eraseBrushIds:(NSArray <NSString *> *)brushIds;
+- (void)updateBrushes:(NSArray <id<RunsBrushProtocol>>*)brushes;
+- (void)refresh;
 
 @end

@@ -19,7 +19,7 @@
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush {
     
     if (brush.frames.count < 2) {//两点确定一条直线
-        NSLog(@"RunsBeeline drawContext : 画直线 坐标集合长度错误");
+        RunsLogEX(@"RunsBeeline drawContext : 画直线 坐标集合长度错误");
         return;
     }
     

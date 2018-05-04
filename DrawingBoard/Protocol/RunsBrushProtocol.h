@@ -14,6 +14,7 @@
 @protocol RunsBrushProtocol <NSObject>
 
 @required
+@property(nonatomic, copy) NSString *brushId;
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) ShapeType shape;
 @property (nonatomic, strong) UIColor *color;

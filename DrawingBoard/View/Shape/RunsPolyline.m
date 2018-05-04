@@ -10,6 +10,10 @@
 #import "RunsShapeProtocol.h"
 #import "RunsBrushProtocol.h"
 
+@implementation DPPoint
+
+@end
+
 @interface RunsPolyline ()<RunsShapeProtocol>
 
 @end
@@ -18,7 +22,7 @@
 
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush {
     if (brush.frames.count <= 0) {
-        NSLog(@"RunsPolyline drawContext : 画任意折线 坐标集合长度小于0");
+        RunsLogEX(@"RunsPolyline drawContext : 画任意折线 坐标集合长度小于0");
         return;
     }
     
@@ -30,7 +34,16 @@
     path.lineCapStyle = kCGLineCapRound;
     path.miterLimit = 0;
     path.lineWidth = brush.width;
+    const float p[2] = {20, 20};
+    [path setLineDash:(const CGFloat *)p count:2 phase:20];
     [brush.color set];
+    
+    if (brush.frames.count == 1) {
+        CGPoint point = brush.frames.firstObject.CGRectValue.origin;
+        CGRect frame1 = CGRectMake(point.x - 0.5, point.y, 0, 0);
+        [brush.frames addObject:[NSValue valueWithCGRect:frame1]];
+    }
+    
     [brush.frames enumerateObjectsUsingBlock:^(NSValue * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx == 0) {
             previousPoint1 = previousPoint2 = currentPoint = obj.CGRectValue.origin;

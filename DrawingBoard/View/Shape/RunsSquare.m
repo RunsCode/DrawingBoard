@@ -19,7 +19,7 @@
 
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush {
     if (brush.frames.count < 2) {
-        NSLog(@"RunsSquare drawContext : 画矩形 坐标集合长度小于0");
+        RunsLogEX(@"RunsSquare drawContext : 画矩形 坐标集合长度小于0");
         return;
     }
     CGPoint origin = brush.frames.firstObject.CGRectValue.origin;

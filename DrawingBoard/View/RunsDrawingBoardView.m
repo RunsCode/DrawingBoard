@@ -21,9 +21,10 @@
 #import "RunsDrawingBoardProxy.h"
 
 //API
-#import "GKSimpleAPI.h"
-#import "NSObject+DeepCopy.h"
+#import "NSObject+RuntimeLog.h"
 #import "UIImage+Category.h"
+#import "GKSimpleAPI.h"
+
 
 
 @interface RunsDrawingBoardView ()<UITextFieldDelegate>
@@ -36,7 +37,7 @@
 @implementation RunsDrawingBoardView
 
 - (void)dealloc {
-    NSLog(@"RunsDrawingBoardView Release");
+    RunsReleaseLog()
 }
 
 - (instancetype)init {
@@ -62,8 +63,7 @@
 
 - (void)initMember {
     self.backgroundColor = [UIColor clearColor];
-    self.userInteractionEnabled = NO;
-    self.swipTap = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipDown:)];
+    self.swipTap = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeDown:)];
     self.swipTap.direction = UISwipeGestureRecognizerDirectionDown;
     self.swipTap.enabled = NO;
     self.panTap = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePanGesture:)];
@@ -72,15 +72,16 @@
     [self addGestureRecognizer:self.panTap];
     [self.panTap requireGestureRecognizerToFail:self.swipTap];
     
-    id<RunsBrushProtocol> brush = [RunsBrushModel brushWithShape:ShapeType_Polyline color:UIColor.redColor thickness:3];
+    id<RunsBrushProtocol> brush = [RunsBrushModel brushWithShape:ShapeType_Polyline color:UIColor.redColor thickness:1.5];
     self.brushModel = brush;
     self.proxy = (id<RunsDrawingBoardProxyProtocol>)[RunsDrawingBoardProxy new];
+    //
+    _drawEnable = NO;
 }
 
 #pragma mark -- RunsDrawingBoardViewProtocol
 
 - (void)setDrawEnable:(BOOL)drawEnable {
-    self.userInteractionEnabled = drawEnable;
     _drawEnable = drawEnable;
 }
 
@@ -122,12 +123,27 @@
     [self setNeedsDisplay];
 }
 
+- (void)eraseBrushIds:(NSArray <NSString *> *)brushIds {
+    [self.proxy eraseBrushIds:brushIds];
+    [self refresh];
+}
+
+- (void)updateBrushes:(NSArray <id <RunsBrushProtocol>> *)brushes {
+    [self.proxy updateBrushes:brushes];
+    [self refresh];
+}
+
+- (void)refresh {
+    [self setNeedsDisplay];
+}
+
 - (NSArray<id<RunsBrushProtocol>> *)brushes {
     return self.proxy.brushes;
 }
 #pragma mark -- UITouch
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    RunsLog(@"RunsDrawingBoardView touchesBegan")
     UITouch* touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
     if ([self.delegate respondsToSelector:@selector(drawingBoardView:didBeganPoint:)]) {
@@ -195,16 +211,16 @@
 }
 #pragma mark -- UITextFieldDelegate
 
-- (void)handleSwipDown:(UISwipeGestureRecognizer*)sender {
+- (void)handleSwipeDown:(UISwipeGestureRecognizer*)sender {
     [self endEditing:YES];
 }
 
 - (void)handlePanGesture:(UIPanGestureRecognizer*)sender {
     
     CGPoint point = [sender locationInView:self];
-    CGFloat offetX = self.textField.frame.size.width * 0.5 ;
-    CGFloat offetY = self.textField.frame.size.height * 0.5 ;
-    CGRect frame = CGRectMake(point.x - offetX, point.y - offetY, self.textField.frame.size.width, self.textField.frame.size.height);
+    CGFloat offsetX = (CGFloat) (self.textField.frame.size.width * 0.5);
+    CGFloat offsetY = (CGFloat) (self.textField.frame.size.height * 0.5);
+    CGRect frame = CGRectMake(point.x - offsetX, point.y - offsetY, self.textField.frame.size.width, self.textField.frame.size.height);
     [self updateTextFieldWithFrame:frame];
     [self.proxy drawTextChangedWithFrame:frame text:self.textField.text];
     [self setNeedsDisplay];
@@ -232,7 +248,7 @@
 - (void)textFieldDidChange:(UITextField *)textField {
     if (!_drawEnable) return;
     //
-    CGRect frame = [self calculteFrameWithText:textField.text];
+    CGRect frame = [self calculateFrameWithText:textField.text];
     [self updateTextFieldWithFrame:frame];
     [self.proxy drawTextChangedWithFrame:frame text:textField.text];
     [self setNeedsDisplay];
@@ -241,7 +257,7 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     if (!_drawEnable) return;
     //
-    CGRect frame = [self calculteFrameWithText:textField.text];
+    CGRect frame = [self calculateFrameWithText:textField.text];
     [self updateTextFieldWithFrame:frame];
     [self.proxy drawTextEndedWithFrame:frame text:textField.text];
     //
@@ -269,7 +285,7 @@
 }
 
 - (void)restoreTextField {
-    CGRect frame = [self calculteFrameWithText:self.textField.placeholder];
+    CGRect frame = [self calculateFrameWithText:self.textField.placeholder];
     UIImage *background = [UIImage rs_imageWithSize:CGSizeMake(frame.size.width, frame.size.height) borderColor:UIColor.grayColor borderWidth:1];
     self.textField.background = background;
     [self.textField setFrame:frame];
@@ -303,7 +319,7 @@
     return textField;
 }
 
-- (CGRect)calculteFrameWithText:(NSString *)text {
+- (CGRect)calculateFrameWithText:(NSString *)text {
     RunsBrushCharacterModel *model = (RunsBrushCharacterModel *)(((NSObject *)self.brushModel).rs_deepCopy);
     if (!model || model.shape != ShapeType_Text) return CGRectZero;
     CGPoint point = model.frames.firstObject.CGRectValue.origin;
@@ -317,7 +333,7 @@
     
     CGSize size = [GKSimpleAPI getContentSizeWithText:text font:font size:(CGSize){width, height}];
     CGRect frame = (CGRect){point.x, point.y, size.width + 2, size.height + 2};
-    NSLog(@"calculteFrameWithText x = %f, y = %f",point.x, point.y);
+    RunsLogEX(@"calculateFrameWithText x = %f, y = %f",point.x, point.y);
     return frame;
 }
 

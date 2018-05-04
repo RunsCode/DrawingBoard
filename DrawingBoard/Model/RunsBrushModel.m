@@ -7,13 +7,11 @@
 //
 
 #import "RunsBrushModel.h"
-#import <objc/runtime.h>
-#import "NSObject+DeepCopy.h"
 
 @implementation RunsBrushModel
 
 - (id)copyWithZone:(NSZone *)zone {
-    RunsBrushModel *model = [[[self class] allocWithZone:zone] init];
+    RunsBrushModel *model = (RunsBrushModel *) [[[self class] allocWithZone:zone] init];
     model.shape = self.shape;
     model.color = self.color;
     model.width = self.width;
@@ -123,7 +121,7 @@
         case ShapeType_Square:
             shape = @"矩形";
             break;
-        case ShapeType_Elipse:
+        case ShapeType_Ellipse:
             shape = @"椭圆";
             break;
         case ShapeType_Round:

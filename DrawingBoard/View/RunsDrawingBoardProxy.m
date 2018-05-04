@@ -36,7 +36,7 @@
 @implementation RunsDrawingBoardProxy
 
 - (void)dealloc {
-    NSLog(@"RunsDrawingBoardProxy Release");
+    RunsReleaseLog()
 }
 
 - (instancetype)init {
@@ -135,6 +135,31 @@
     [model.frames removeAllObjects];
     NSValue *value = [NSValue valueWithCGRect:frame];
     [model.frames addObject:value];
+}
+
+- (void)eraseBrushIds:(NSArray <NSString *> *)brushIds {
+    if (brushIds.isEmpty)
+        return;
+    [_brushes enumerateObjectsUsingBlock:^(id <RunsBrushProtocol> obj, NSUInteger idx, BOOL *stop) {
+        [brushIds enumerateObjectsUsingBlock:^(NSString * brushId, NSUInteger idx, BOOL *stop) {
+            if ([obj.brushId isEqualToString:brushId]) {
+                [_brushes removeObject:obj];
+                [_operate pop:obj];
+            }
+        }];
+    }];
+}
+
+- (void)updateBrushes:(NSArray <id <RunsBrushProtocol>> *)brushes {
+    if (brushes.isEmpty)
+        return;
+    [_brushes enumerateObjectsUsingBlock:^(id <RunsBrushProtocol> obj, NSUInteger idx, BOOL *stop) {
+        [brushes enumerateObjectsUsingBlock:^(id <RunsBrushProtocol> obj1, NSUInteger idx, BOOL *stop) {
+            if ([obj.brushId isEqualToString:obj1.brushId]) {
+                _brushes[idx] = obj1;
+            }
+        }];
+    }];
 }
 
 #pragma mark -- Private Method

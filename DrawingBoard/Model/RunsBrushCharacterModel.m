@@ -8,7 +8,7 @@
 
 #import "RunsBrushCharacterModel.h"
 #import <objc/runtime.h>
-#import "NSObject+DeepCopy.h"
+#import "NSObject+RuntimeLog.h"
 
 @implementation RunsBrushCharacterModel
 
@@ -65,7 +65,7 @@
 }
 
 + (instancetype)brushWithShape:(ShapeType)shape color:(UIColor *)color thickness:(CGFloat)width {
-    RunsBrushCharacterModel *model = [[RunsBrushCharacterModel alloc] initWithShape:shape text:@"" color:color font:18.f frame:CGRectZero];
+    RunsBrushCharacterModel *model = [[RunsBrushCharacterModel alloc] initWithShape:shape text:@"" color:color font:DEFAULT_WHITEBOARD_FONT_SIZE(14.f) frame:CGRectZero];
     return model;
 }
 
@@ -87,7 +87,7 @@
         case ShapeType_Square:
             shape = @"矩形";
             break;
-        case ShapeType_Elipse:
+        case ShapeType_Ellipse:
             shape = @"椭圆";
             break;
         case ShapeType_Round:
