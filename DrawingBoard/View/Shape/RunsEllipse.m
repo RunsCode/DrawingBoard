@@ -10,11 +10,19 @@
 #import "RunsShapeProtocol.h"
 #import "RunsBrushProtocol.h"
 
-@interface RunsEllipse ()<RunsShapeProtocol>
+@interface RunsEllipse ()
 
 @end
 
 @implementation RunsEllipse
+
+@synthesize bounds = _bounds;
+
++ (instancetype)shapeWithBounds:(CGRect)bounds {
+    RunsEllipse<RunsShapeProtocol> *shape = [[[self class] alloc] init];
+    shape.bounds = bounds;
+    return shape;
+}
 
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush {
     if (brush.frames.count < 2) {
@@ -37,5 +45,6 @@
     CGContextAddEllipseInRect(context, bounds);
     CGContextDrawPath(context, brush.isFill ? kCGPathFillStroke : kCGPathStroke);
 }
+
 
 @end

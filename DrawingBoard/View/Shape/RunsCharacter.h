@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RunsCharacter : NSObject
+#import "RunsShapeProtocol.h"
+@interface RunsCharacter : NSObject<RunsShapeProtocol>
 
 @end

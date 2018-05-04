@@ -75,6 +75,7 @@
     id<RunsBrushProtocol> brush = [RunsBrushModel brushWithShape:ShapeType_Polyline color:UIColor.redColor thickness:1.5];
     self.brushModel = brush;
     self.proxy = (id<RunsDrawingBoardProxyProtocol>)[RunsDrawingBoardProxy new];
+    self.proxy.bounds = self.bounds;
     //
     _drawEnable = NO;
 }

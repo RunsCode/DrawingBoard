@@ -14,11 +14,18 @@
 
 @end
 
-@interface RunsPolyline ()<RunsShapeProtocol>
+@interface RunsPolyline ()
 
 @end
 
 @implementation RunsPolyline
+@synthesize bounds = _bounds;
+
++ (instancetype)shapeWithBounds:(CGRect)bounds {
+    RunsPolyline<RunsShapeProtocol> *shape = [[[self class] alloc] init];
+    shape.bounds = bounds;
+    return shape;
+}
 
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush {
     if (brush.frames.count <= 0) {

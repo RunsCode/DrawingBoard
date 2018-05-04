@@ -14,6 +14,7 @@
 
 @protocol RunsDrawingBoardProxyProtocol <RunsDrawingBoardOperatingProtocol>
 
+@property (nonatomic, assign) CGRect bounds;
 @property (nonatomic, strong, readonly) id<RunsBrushProtocol> currentBrush;
 @property (nonatomic, strong, readonly) NSMutableArray<id<RunsBrushProtocol>> *brushes;
 

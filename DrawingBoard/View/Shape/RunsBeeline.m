@@ -10,11 +10,18 @@
 #import "RunsShapeProtocol.h"
 #import "RunsBrushProtocol.h"
 
-@interface RunsBeeline ()<RunsShapeProtocol>
+@interface RunsBeeline ()
 
 @end
 
 @implementation RunsBeeline
+@synthesize bounds = _bounds;
+
++ (instancetype)shapeWithBounds:(CGRect)bounds {
+    RunsBeeline<RunsShapeProtocol> *shape = [[[self class] alloc] init];
+    shape.bounds = bounds;
+    return shape;
+}
 
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush {
     

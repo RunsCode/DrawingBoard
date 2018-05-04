@@ -7,14 +7,20 @@
 //
 
 #import "RunsEraser.h"
-#import "RunsShapeProtocol.h"
 #import "RunsBrushProtocol.h"
 
-@interface RunsEraser ()<RunsShapeProtocol>
+@interface RunsEraser ()
 
 @end
 
 @implementation RunsEraser
+@synthesize bounds = _bounds;
+
++ (instancetype)shapeWithBounds:(CGRect)bounds {
+    RunsEraser<RunsShapeProtocol> *shape = [[[self class] alloc] init];
+    shape.bounds = bounds;
+    return shape;
+}
 
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush {
     if (brush.frames.count <= 0) {

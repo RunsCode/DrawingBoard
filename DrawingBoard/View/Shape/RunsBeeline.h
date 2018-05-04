@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface RunsBeeline : NSObject
+@protocol RunsShapeProtocol;
+@interface RunsBeeline : NSObject<RunsShapeProtocol>
 
 @end

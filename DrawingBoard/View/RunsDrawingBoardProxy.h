@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RunsDrawingBoardOperatingProtocol.h"
+#import "RunsDrawingBoardProxyProtocol.h"
 
 @protocol RunsBrushProtocol;
-
-@interface RunsDrawingBoardProxy : NSObject
+@interface RunsDrawingBoardProxy : NSObject<RunsDrawingBoardProxyProtocol>
+@property (nonatomic, assign) CGRect bounds;
 @property (nonatomic, strong, readonly) id<RunsBrushProtocol> currentBrush;
 @property (nonatomic, strong, readonly) NSMutableArray<id<RunsBrushProtocol>> *brushes;
 @end

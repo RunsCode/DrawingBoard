@@ -24,6 +24,8 @@ typedef NS_ENUM(NSUInteger, ShapeType) {
 
 @protocol RunsBrushProtocol;
 @protocol RunsShapeProtocol <NSObject>
+@property(nonatomic, assign) CGRect bounds;
++ (instancetype)shapeWithBounds:(CGRect)bounds;
 @required
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush;
 @end

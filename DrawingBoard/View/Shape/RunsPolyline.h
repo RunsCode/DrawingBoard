@@ -11,7 +11,9 @@
 @interface DPPoint : OUPoint
 @property (nonatomic, assign) NSInteger index;
 @end
-@interface RunsPolyline : NSObject
+
+#import "RunsShapeProtocol.h"
+@interface RunsPolyline : NSObject<RunsShapeProtocol>
 
 @end
 

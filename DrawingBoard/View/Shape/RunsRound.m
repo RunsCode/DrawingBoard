@@ -11,12 +11,19 @@
 #import "RunsBrushProtocol.h"
 //#import <CoreGraphics/CoreGraphics.h>
 
-@interface RunsRound ()<RunsShapeProtocol>
+@interface RunsRound ()
 
 @end
 
 
 @implementation RunsRound
+@synthesize bounds = _bounds;
+
++ (instancetype)shapeWithBounds:(CGRect)bounds {
+    RunsRound<RunsShapeProtocol> *shape = [[[self class] alloc] init];
+    shape.bounds = bounds;
+    return shape;
+}
 
 - (void)drawContext:(CGContextRef)context brush:(id<RunsBrushProtocol>)brush {
     if (brush.frames.count < 2) {

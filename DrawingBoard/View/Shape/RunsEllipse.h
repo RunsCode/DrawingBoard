@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+@protocol RunsShapeProtocol;
 
-@interface RunsEllipse : NSObject
+@interface RunsEllipse : NSObject<RunsShapeProtocol>
 
 @end

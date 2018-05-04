@@ -9,8 +9,6 @@
 #import "RunsDrawingBoardProxy.h"
 
 //model
-#import "RunsDrawingBoardOperatingProtocol.h"
-#import "RunsDrawingBoardProxyProtocol.h"
 #import "RunsBrushCharacterModel.h"
 
 //shape
@@ -27,7 +25,7 @@
 
 #import "RunsDrawingBoardOperate.h"
 
-@interface RunsDrawingBoardProxy ()<RunsDrawingBoardProxyProtocol>
+@interface RunsDrawingBoardProxy ()
 @property (nonatomic, strong) NSMutableArray<id<RunsShapeProtocol>> *shapes;
 @property (nonatomic, strong) id<RunsBrushProtocol> currentBrush;
 @property (nonatomic, strong) RunsDrawingBoardOperate *operate;
@@ -154,7 +152,7 @@
     if (brushes.isEmpty)
         return;
     [_brushes enumerateObjectsUsingBlock:^(id <RunsBrushProtocol> obj, NSUInteger idx, BOOL *stop) {
-        [brushes enumerateObjectsUsingBlock:^(id <RunsBrushProtocol> obj1, NSUInteger idx, BOOL *stop) {
+        [brushes enumerateObjectsUsingBlock:^(id <RunsBrushProtocol> obj1, NSUInteger idx1, BOOL *stop) {
             if ([obj.brushId isEqualToString:obj1.brushId]) {
                 _brushes[idx] = obj1;
             }
@@ -178,13 +176,13 @@
 - (NSMutableArray<id<RunsShapeProtocol>> *)shapes {
     if (_shapes) return _shapes;
     NSMutableArray<id<RunsShapeProtocol>> *array = [NSMutableArray array];
-    [array addObject:(id<RunsShapeProtocol>)RunsPolyline.new];
-    [array addObject:(id<RunsShapeProtocol>)RunsBeeline.new];
-    [array addObject:(id<RunsShapeProtocol>)RunsSquare.new];
-    [array addObject:(id<RunsShapeProtocol>)RunsEllipse.new];
-    [array addObject:(id<RunsShapeProtocol>)RunsRound.new];
-    [array addObject:(id<RunsShapeProtocol>)RunsCharacter.new];
-    [array addObject:(id<RunsShapeProtocol>)RunsEraser.new];
+    [array addObject:[RunsPolyline shapeWithBounds:_bounds]];
+    [array addObject:[RunsBeeline shapeWithBounds:_bounds]];
+    [array addObject:[RunsSquare shapeWithBounds:_bounds]];
+    [array addObject:[RunsEllipse shapeWithBounds:_bounds]];
+    [array addObject:[RunsRound shapeWithBounds:_bounds]];
+    [array addObject:[RunsCharacter shapeWithBounds:_bounds]];
+    [array addObject:[RunsEraser shapeWithBounds:_bounds]];
     _shapes = array;
     return array;
 }

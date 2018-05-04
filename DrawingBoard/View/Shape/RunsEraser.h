@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RunsEraser : NSObject
+#import "RunsShapeProtocol.h"
+@interface RunsEraser : NSObject<RunsShapeProtocol>
 
 @end
