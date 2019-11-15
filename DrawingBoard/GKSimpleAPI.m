@@ -15,7 +15,7 @@
 
 #pragma mark -- NSString 
 
-+ (NSString* _Nonnull)UUID {
++ (NSString *)UUID {
     CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
     NSString *uuid = (NSString *)CFBridgingRelease(CFUUIDCreateString(kCFAllocatorDefault, uuidRef));
     CFRelease(uuidRef);
@@ -39,18 +39,13 @@
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
-+ (nonnull id)jsonConvertObject:(nonnull NSString*)szValue {
++ (id)jsonConvertObject:(nonnull NSString*)szValue {
     if (!szValue) {
         return nil;
     }
     NSError * error = nil;
     id obj = [NSJSONSerialization JSONObjectWithData:[szValue dataUsingEncoding:NSUTF8StringEncoding]
                                              options:NSJSONReadingMutableContainers error:&error];
-//    std::string szText = [szValue UTF8String];
-//    NSData * jsonData = [NSData dataWithBytes:szText.c_str() length:szText.length()];
-//    id obj = [NSJSONSerialization JSONObjectWithData:jsonData
-//                                             options:NSJSONReadingMutableContainers
-//                                               error:&error];
     if (error) {
         NSLog(@"%@",error.description);
         return nil;
@@ -207,8 +202,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([exportSession status] == AVAssetExportSessionStatusCompleted) {
                 NSData * data = [NSData dataWithContentsOfURL:outputUrl];
-//                AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:outputUrl options:nil];
-//                NSArray * array  = asset.metadata;
                 NSLog(@"压缩完毕,压缩后大小: %f MB",data.length/1024.00/1024.00);
                 if (callback) {
                     callback(data);
